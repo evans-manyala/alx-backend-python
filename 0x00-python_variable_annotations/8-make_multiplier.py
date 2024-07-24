@@ -26,4 +26,4 @@ def make_multiplier(multiplier: float) -> Callable[[float], float]:
         The product of the number & the multiplier.
     """
         return number * multiplier
-    return make_multiplier
+    return multiply

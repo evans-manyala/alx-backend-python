@@ -3,10 +3,10 @@
 Function creates a tuple from a string & the square of a number.
 """
 
-from typing import Union
+from typing import Union, Tuple
 
 
-def to_kv(k: str, v: Union[int, float]) -> tuple[str, float]:
+def to_kv(k: str, v: Union[int, float]) -> Tuple[str, float]:
     """Converts a key and a value to a key-value tuple.
     
     Args:

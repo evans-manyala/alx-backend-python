@@ -3,13 +3,13 @@
 Function that safely gets a value
 from a dictionary with a default.
 """
-from typing import TypeVar, Any, Mapping, Union
+from typing import Mapping, Any, Union, TypeVar, Optional
 
 T = TypeVar('T')
-K = TypeVar('K')
 
-def safely_get_value(dct: Mapping, key: Any, default: T = None) -> \
-        Union[Any, T]:
+
+def safely_get_value(dct: Mapping, key: Any,
+                     default: Optional[T] = None) -> Union[Any, T]:
     """
     Safely get a value from a dictionary with a default.
 

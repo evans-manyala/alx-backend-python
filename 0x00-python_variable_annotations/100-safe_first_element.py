@@ -3,11 +3,11 @@
 Function that safely gets a value
 from a dictionary with a default.
 """
-from typing import Any, Sequence, Union
+from typing import Any,Union, Sequence
 
 
 
-def safely_get_value(lst: Sequence[Any]) -> Union[Any, None]):
+def safe_first_element(lst: Sequence[Any]) -> Union[Any, None]:
     """
     Safely get a value from a dictionary with a default.
     """

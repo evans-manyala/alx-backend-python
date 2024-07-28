@@ -49,25 +49,23 @@ class TestGetJson(unittest.TestCase):
 
 class TestMemoize(unittest.TestCase):
 
-    class TestClass:
-        def a_method(self):
-            return 42
+    def test_memoize(self):
+        class TestClass:
+            def a_method(self):
+                return 42
 
-        @memoize
-        def a_property(self):
-            return self.a_method()
+            @memoize
+            def a_property(self):
+                return self.a_method()
+        test_instance = TestClass()
+        with patch.object(TestClass, 'a_method') as mock:
+            mock.return_value = 42
 
-    @patch.object(TestClass, 'a_method', return_value=42)
-    def test_memoize(self, mock_a_method):
-        test_instance = self.TestClass()
-
-        first_call = test_instance.a_property()
-        second_call = test_instance.a_property()
-
-        mock_a_method.assert_called_once()
-
-        self.assertEqual(first_call, 42)
-        self.assertEqual(second_call, 42)
+            result1 = test_instance.a_property
+            result2 = test_instance.a_property
+            self.assertEqual(result1, 42)
+            self.assertEqual(result2, 42)
+            mock.assert_called_once()
 
 
 if __name__ == "__main__":

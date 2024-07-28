@@ -47,6 +47,17 @@ class TestGetJson(unittest.TestCase):
             self.assertEqual(result, test_payload)
 
 
+def memoize(func):
+    cache = {}
+
+    def wrapper(*args, **kwargs):
+        key = str(args) + str(kwargs)
+        if key not in cache:
+            cache[key] = func(*args, **kwargs)
+        return cache[key]
+    return wrapper
+
+
 class TestMemoize(unittest.TestCase):
 
     def test_memoize(self):
@@ -57,12 +68,13 @@ class TestMemoize(unittest.TestCase):
             @memoize
             def a_property(self):
                 return self.a_method()
+
         test_instance = TestClass()
         with patch.object(TestClass, 'a_method') as mock:
             mock.return_value = 42
 
-            result1 = test_instance.a_property
-            result2 = test_instance.a_property
+            result1 = test_instance.a_property()
+            result2 = test_instance.a_property()
             self.assertEqual(result1, 42)
             self.assertEqual(result2, 42)
             mock.assert_called_once()

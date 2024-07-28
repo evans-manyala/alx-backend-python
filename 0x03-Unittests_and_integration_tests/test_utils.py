@@ -3,13 +3,14 @@
 Funtion to test utils.py
 """
 import unittest
-from parameterized import parameterized # type: ignore
+from parameterized import parameterized
 from utils import access_nested_map
 from unittest.mock import patch, Mock
 from utils import get_json
 
+
 class TestAccessNestedMap(unittest.TestCase):
-    
+
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
         ({"a": {"b": 2}}, ("a",), {"b": 2}),
@@ -28,8 +29,9 @@ class TestAccessNestedMap(unittest.TestCase):
             access_nested_map(nested_map, path)
         self.assertEqual(str(cm.exception), repr(path[-1]))
 
+
 class TestGetJson(unittest.TestCase):
-    
+
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False}),
@@ -44,6 +46,7 @@ class TestGetJson(unittest.TestCase):
 
             mock_get.assert_called_once_with(test_url)
             self.assertEqual(result, test_payload)
+
 
 if __name__ == "__main__":
     unittest.main()

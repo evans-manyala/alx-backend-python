@@ -3,7 +3,10 @@
 Testing the client module.
 """
 import unittest
-from unittest.mock import patch
+from typing import Dict
+from unittest.mock import (
+    patch, Mock, MagicMock
+)
 from parameterized import parameterized
 from client import GithubOrgClient
 
@@ -12,18 +15,17 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @parameterized.expand(
         [
-            ("google",),
-            ("abc",),
+            ("google",{"login": "google"}),
+            ("abc",{"login": "abc"}),
         ]
     )
-    @patch("client.GithubOrgClient.get_json")
-    def test_org(self, org_name, mock_get_json):
+    @patch("client.GithubOrgClient.get_json",)
+    def test_org(self, org_name: str, expected_org: Dict, mock_get_json: MagicMock) -> None:
         """Test that GithubOrgClient.org returns the correct value."""
-        expected_org = {"login": org_name}
         mock_get_json.return_value = expected_org
 
         client = GithubOrgClient(org_name)
-        result = client.get_org()
+        result = client.org()
 
         mock_get_json.assert_called_once_with(
             f"https://api.github.com/orgs/{org_name}")

@@ -34,8 +34,8 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch("client.GithubOrgClient.org", new_callable=PropertyMock)
     def test_public_repos_url(self, mock_org: PropertyMock) -> None:
-        """T
-        est that _public_repos_url
+        """
+        Test that _public_repos_url
         returns the correct URL.
         """
         test_payload = {"repos_url":
@@ -50,10 +50,7 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch("client.GithubOrgClient.get_json")
     def test_public_repos(self, mock_get_json: MagicMock) -> None:
-        """
-        Test that GithubOrgClient.
-        returns the correct list of repos.
-        """
+        """Test that public_repos returns the correct list of repos."""
         test_payload = [{"name": "repo1"}, {"name": "repo2"}]
         mock_get_json.return_value = test_payload
 
@@ -64,15 +61,14 @@ class TestGithubOrgClient(unittest.TestCase):
             mock_public_repos_url.return_value = (
                 "https://api.github.com/orgs/google/repos"
             )
+        client = GithubOrgClient("google")
+        result = client.public_repos()
 
-            client = GithubOrgClient("google")
-            result = client.public_repos()
-
-            self.assertEqual(result, ["repo1", "repo2"])
-            mock_public_repos_url.assert_called_once()
-            mock_get_json.assert_called_once_with(
-                "https://api.github.com/orgs/google/repos"
-            )
+        self.assertEqual(result, ["repo1", "repo2"])
+        mock_public_repos_url.assert_called_once()
+        mock_get_json.assert_called_once_with(
+            "https://api.github.com/orgs/google/repos"
+        )
 
     @parameterized.expand(
         [
@@ -82,10 +78,9 @@ class TestGithubOrgClient(unittest.TestCase):
             ({}, "my_license", False),
         ]
     )
-    def test_has_license(self, repo: Dict, license_key:
-                         str, expected: bool) -> None:
-        """Test that GithubOrgClient.has_license
-        returns the correct boolean value."""
+    def test_has_license(self, repo: Dict,
+                         license_key: str, expected: bool) -> None:
+        """Test that has_license returns the correct boolean value."""
         client = GithubOrgClient("test_org")
         result = client.has_license(repo, license_key)
         self.assertEqual(result, expected)
@@ -135,6 +130,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         Integration test for GithubOrgClient.public_repos
         with Apache2 license.
         """
+
         client = GithubOrgClient("google")
         repos = client.public_repos(license="apache-2.0")
         self.assertEqual(repos, self.apache2_repos)

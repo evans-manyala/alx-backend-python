@@ -34,7 +34,10 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch("client.GithubOrgClient.org", new_callable=PropertyMock)
     def test_public_repos_url(self, mock_org: PropertyMock) -> None:
-        """Test that _public_repos_url returns the correct URL."""
+        """T
+        est that _public_repos_url
+        returns the correct URL.
+        """
         test_payload = {"repos_url":
                         "https://api.github.com/orgs/google/repos"}
         mock_org.return_value = test_payload
@@ -79,12 +82,10 @@ class TestGithubOrgClient(unittest.TestCase):
             ({}, "my_license", False),
         ]
     )
-    def test_has_license(self, repo: Dict,
-                         license_key: str, expected: bool) -> None:
-        """
-        Test that GithubOrgClient.has_license
-        returns the correct boolean value.
-        """
+    def test_has_license(self, repo: Dict, license_key:
+                         str, expected: bool) -> None:
+        """Test that GithubOrgClient.has_license
+        returns the correct boolean value."""
         client = GithubOrgClient("test_org")
         result = client.has_license(repo, license_key)
         self.assertEqual(result, expected)
@@ -104,9 +105,7 @@ class TestGithubOrgClient(unittest.TestCase):
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        """
-        Set up class method to start patching.
-        """
+        """Set up class method to start patching."""
         cls.get_patcher = patch("requests.get",
                                 side_effect=cls.mocked_requests_get)
         cls.mocked_get = cls.get_patcher.start()
@@ -129,8 +128,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """Integration test for GithubOrgClient.public_repos."""
         client = GithubOrgClient("google")
         repos = client.public_repos()
-        self.assertEqual(repos,
-                         self.expected_repos)
+        self.assertEqual(repos, self.expected_repos)
 
     def test_public_repos_with_license(self):
         """

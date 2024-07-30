@@ -55,6 +55,7 @@ class TestGetJson(unittest.TestCase):
 
 
 def memoize(func):
+    """Decorator to memoize method results."""
     cache = {}
 
     def wrapper(*args, **kwargs):

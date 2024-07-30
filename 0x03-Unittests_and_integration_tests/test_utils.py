@@ -68,8 +68,9 @@ def memoize(func):
 
 
 class TestMemoize(unittest.TestCase):
-
+    """Test memoize function."""
     def test_memoize(self) -> None:
+        """Test memoize output."""
         class TestClass:
             def a_method(self):
                 return 42

@@ -20,6 +20,13 @@ class TestAccessNestedMap(unittest.TestCase):
         ]
     )
     def test_access_nested_map(self, nested_map, path, expected):
+        """
+        Test the access_nested_map method.
+        Args:
+            nested_map (Dict): A dictionary that may have nested dictionaries
+            path (List, tuple, set): Keys to get to the required value in the
+                                     nested dictionary
+        """
         from utils import access_nested_map
 
         self.assertEqual(access_nested_map(nested_map, path), expected)
@@ -31,12 +38,22 @@ class TestAccessNestedMap(unittest.TestCase):
         ]
     )
     def test_access_nested_map_exception(self, nested_map, path):
+        """
+        Test the access_nested_map method.
+        Args:
+            nested_map (Dict): A dictionary that may have nested dictionaries
+            path (List, tuple, set): Keys to get to the required value in the
+                                     nested dictionary
+        """
         with self.assertRaises(KeyError) as cm:
             access_nested_map(nested_map, path)
         self.assertEqual(str(cm.exception), repr(path[-1]))
 
 
 class TestGetJson(unittest.TestCase):
+    """
+    Test the get_json function
+    """
 
     @parameterized.expand(
         [
@@ -45,6 +62,12 @@ class TestGetJson(unittest.TestCase):
         ]
     )
     def test_get_json(self, test_url, test_payload):
+        """
+        Test the get_json method if it returns the expected output.
+        Args:
+            url: url to send http request to
+            payload: expected json response
+        """
         with patch("utils.requests.get") as mock_get:
             mock_response = Mock()
             mock_response.json.return_value = test_payload
